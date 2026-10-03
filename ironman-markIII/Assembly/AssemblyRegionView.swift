@@ -3,21 +3,13 @@ import SwiftUI
 struct AssemblyRegionView: View {
     let region: AssemblyRegion
     @ObservedObject var state: MarkIIIState
-
     var body: some View {
         ZStack {
             ForEach(MarkIIILayout.parts.filter { $0.region == region }) { part in
-                PartViewFactory.view(for: part.number)
-                    .frame(width: part.width, height: part.height)
-                    .position(part.center)
-                    .opacity(state.currentStep >= part.number ? 1 : 0)
-                    .offset(state.currentStep >= part.number ? .zero : part.entry.offset)
-                    .scaleEffect(state.currentStep >= part.number ? 1 : (part.entry == .settle ? 0.96 : 1))
-                    .animation(.spring(response: 0.38, dampingFraction: 0.82), value: state.currentStep >= part.number)
-                    .zIndex(part.zIndex)
+                AssemblyPartView(part: part, visible: state.isVisible(part), selectedPartNumber: state.selectedPartNumber)
+                    .zIndex(state.selectedPartNumber == part.number ? 9999 : part.zIndex)
             }
-        }
-        .frame(width: MarkIIILayout.canvas.width, height: MarkIIILayout.canvas.height)
+        }.frame(width: MarkIIILayout.canvas.width, height: MarkIIILayout.canvas.height)
     }
 }
 
@@ -98,7 +90,43 @@ enum PartViewFactory {
         case 72: RightFootUpper()
         case 73: RightToePlate()
         case 74: RightHeelArmor()
+        case 75: CrownInset()
+        case 76: BrowBridge()
+        case 77: LeftCollarLatch()
+        case 78: RightCollarLatch()
+        case 79: LeftShoulderPivot()
+        case 80: RightShoulderPivot()
+        case 81: LeftBicepUpperBand()
+        case 82: RightBicepUpperBand()
+        case 83: LeftBicepLowerBand()
+        case 84: RightBicepLowerBand()
+        case 85: LeftForearmFinUpper()
+        case 86: RightForearmFinUpper()
+        case 87: LeftForearmFinMiddle()
+        case 88: RightForearmFinMiddle()
+        case 89: LeftForearmFinLower()
+        case 90: RightForearmFinLower()
+        case 91: LeftThumbProximal()
+        case 92: RightThumbProximal()
+        case 93: LeftThumbDistal()
+        case 94: RightThumbDistal()
+        case 95: LeftIndexProximal()
+        case 96: RightIndexProximal()
+        case 97: LeftIndexDistal()
+        case 98: RightIndexDistal()
+        case 99: LeftMiddleProximal()
+        case 100: RightMiddleProximal()
+        case 101: LeftMiddleDistal()
+        case 102: RightMiddleDistal()
+        case 103: LeftKneeSideHinge()
+        case 104: RightKneeSideHinge()
         default: EmptyView()
         }
     }
+}
+
+
+#Preview {
+    AssemblyRegionView(region: .helmet, state: MarkIIIState())
+        .background(BlueprintStyle.paper)
 }

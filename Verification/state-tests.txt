@@ -1,0 +1,6 @@
+PASS: 104 identities, 6 regions, 57 beats, paired assembly, boots first, helmet last, faceplate final, bounds, controls, cancellation and delayed illumination
+RENDER: iphone-preview, 393 × 852
+RENDER: ipad-preview, 834 × 1194
+RENDER: compact-preview, 375 × 667
+RENDER: landscape-preview, 852 × 393
+RENDER: boots-stage, body-stage, before-face-seal
